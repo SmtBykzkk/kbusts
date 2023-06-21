@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Ana Sayfa{% endblock %} 
+{% block links %}
+<link rel="stylesheet" href="{% static 'exam/home_page.css' %}" />
+{% endblock %} 
+{% block content %}
+<section id="welcome">
+	<header>
+		<h1>KARABÜK ÜNİVERSİTESİ</h1>
+	</header>
+	<p>Sınav Takvimi Oluşturma ve Takip Sistemi</p>
+	<ul class="messages m-5">
+		{% for message in messages %}
+		<li{% if message.tags %} class="text-center w-100 p-4 shadow rounded alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+</section>
+<section id="latest-exams">
+	<h2>Yaklaşan Sınavlar</h2>
+	<div class="d-flex justify-content-end m-2">
+		<a class="" href="{% url 'exam-list-page' %}">
+			Bütün Sınavları Görmek İçin Tıklayınız
+		</a>
+	</div>
+	<hr>
+	{% if exams %}
+	{% for exam in exams %}
+	{% include 'exam/includes/exam_list_item.html' %}
+{% endfor %}
+	{% else %}
+	<p class='text-center'>Yaklaşan sınav yok</p>
+	{% endif %}
+</section>
+{% endblock %}

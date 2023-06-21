@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% load static %} {% block title %} Dışa Aktar {% endblock %} 
+{% block links %}
+<link rel="stylesheet" href="{% static 'exam/exam_create.css' %}" />
+{% endblock %} {% block content %}
+
+<div class="container">
+    <h1 class="text-center m-4 display-4">Dışa Aktar</h1>
+    <form method="post" class="form border p-3 shadow-lg bg-light text-black">
+        {% csrf_token %}
+        <div class="form-group">
+        {{ form.as_p }}
+        <button type="submit">Indir</button>
+        </div>
+    </form>
+</div class="container">
+
+{% endblock %}
+    
+    
+ 

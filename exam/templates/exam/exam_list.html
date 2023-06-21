@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title%} Sınav Listesi {% endblock  %}
+{% block links%} <link rel="stylesheet" href="{% static 'exam/exam_list.css' %}"> {% endblock  %}
+{% block content %}
+
+
+<div class="container">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="text-center alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h1 class="text-center m-4 display-4">Sınavlar</h1>
+    <form method="POST" class="form border p-3 shadow-lg bg-light text-black">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="order_by" class="font-weight-bold">Sırala</label>
+            <select name="order_by" id="order_by" class="form-select">
+                <option value="start_date" selected>--</option>
+                <option value="start_date">Başlangıç Tarihi</option>
+                <option value="-end_date">Bitiş Tarihi</option>
+                <option value="unit">Tür</option>
+                <option value="-duration">Süre</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="filter_by" class="font-weight-bold">Türe Göre Filtrele</label>
+            <select name="filter_by" id="filter_by" class="form-select">
+                <option value="" selected>--</option>
+                <option value="1">Klasik</option>
+                <option value="2">Test</option>
+                <option value="3">UNIKA</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Uygula</button>
+    </form>
+    {% if exams %}
+    {% for exam in exams %}
+    {% include 'exam/includes/exam_list_item.html' %}
+    {% endfor %}
+    {% else %}
+    <div class="alert alert-primary mt-4 text-center pt-4" role="alert">
+        <p>Yaklaşan sınav yok</p>
+      </div>
+    {% endif %}
+</div>
+{% endblock  %}
